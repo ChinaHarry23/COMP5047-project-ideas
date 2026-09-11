@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 640" width="920" height="640" role="img" aria-label="Hardware and software architecture map for Wildlife-First Adaptive Path Light">
+  <title>Wildlife-First Adaptive Path Light - architecture map</title>
+  <desc>World to sense to ESP32-S3 fusion to actuators. On-device, no screen.</desc>
+  <rect width="920" height="640" fill="#ffffff"/>
+  <text x="32" y="36" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#111">Wildlife-First Adaptive Path Light - architecture map</text>
+  <text x="32" y="56" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#444">On-device only: world to sense to fuse to actuate. No phone or screen in the loop. COMP4447 / COMP5047.</text>
+
+  <g font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#666">
+    <text x="32" y="100">WORLD</text>
+    <text x="32" y="188">SENSE</text>
+    <text x="32" y="300">FUSE</text>
+    <text x="32" y="430">ACTUATE</text>
+    <text x="32" y="530">POWER</text>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="78" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="230" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Bush / bats</text>
+    <text x="230" y="116" text-anchor="middle" font-size="11" fill="#333">Darkness is the resource</text>
+    <rect x="370" y="78" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="490" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Path / walker</text>
+    <text x="490" y="116" text-anchor="middle" font-size="11" fill="#333">Exception that justifies light</text>
+    <rect x="630" y="78" width="250" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="755" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Night lux / clock</text>
+    <text x="755" y="116" text-anchor="middle" font-size="11" fill="#333">Dawn and spill suppress the LED</text>
+  </g>
+
+  <g stroke="#222" stroke-width="1.2" fill="none">
+    <path d="M230 130 v20"/>
+    <path d="M490 130 v20"/>
+    <path d="M755 130 v20"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="158" width="185" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="202" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">MEMS mic + analog FD</text>
+    <text x="202" y="196" text-anchor="middle" font-size="11" fill="#333">10-15 kHz  A. australis</text>
+    <text x="202" y="212" text-anchor="middle" font-size="11" fill="#333">25-35 kHz  C. gouldii to ADC</text>
+    <rect x="310" y="158" width="175" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="397" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">LD2410 mmWave</text>
+    <text x="397" y="196" text-anchor="middle" font-size="11" fill="#333">Presence + range ~5 m</text>
+    <text x="397" y="212" text-anchor="middle" font-size="11" fill="#333">UART, 1 s persist</text>
+    <rect x="500" y="158" width="175" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="587" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">BH1750 / VEML7700</text>
+    <text x="587" y="196" text-anchor="middle" font-size="11" fill="#333">Ambient lux, I2C</text>
+    <text x="587" y="212" text-anchor="middle" font-size="11" fill="#333">Night vs spill</text>
+    <rect x="690" y="158" width="190" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="785" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Sunset cache</text>
+    <text x="785" y="196" text-anchor="middle" font-size="11" fill="#333">BoM API to NVS</text>
+    <text x="785" y="212" text-anchor="middle" font-size="11" fill="#333">Offline is_night</text>
+  </g>
+
+  <g stroke="#222" stroke-width="1.2" fill="none">
+    <path d="M202 228 v28"/>
+    <path d="M397 228 v28"/>
+    <path d="M587 228 v28"/>
+    <path d="M785 228 v28"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="264" width="770" height="100" fill="#111" stroke="#111" stroke-width="1.2"/>
+    <text x="495" y="288" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">ESP32-S3  |  ESP-IDF  |  on-device  |  no screen</text>
+    <text x="220" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Persist</text>
+    <text x="220" y="336" text-anchor="middle" font-size="11" fill="#ddd">1 s presence, pulse-rate</text>
+    <text x="400" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Fuse</text>
+    <text x="400" y="336" text-anchor="middle" font-size="11" fill="#ddd">lux + body + dual-band + time</text>
+    <text x="590" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Six-state machine</text>
+    <text x="590" y="336" text-anchor="middle" font-size="11" fill="#ddd">default = off</text>
+    <text x="770" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Drive</text>
+    <text x="770" y="336" text-anchor="middle" font-size="11" fill="#ddd">PWM, servo, GPIO</text>
+    <text x="495" y="354" text-anchor="middle" font-size="10" fill="#bbb">Upgrade only: TinyML, ESP-DSP FFT, BLE maintainer log</text>
+  </g>
+
+  <g stroke="#222" stroke-width="1.2" fill="none">
+    <path d="M250 364 v28"/>
+    <path d="M495 364 v28"/>
+    <path d="M740 364 v28"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="400" width="250" height="64" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="235" y="422" text-anchor="middle" font-size="12" font-weight="700" fill="#111">MOSFET + 2200 K / PC-amber LED</text>
+    <text x="235" y="442" text-anchor="middle" font-size="11" fill="#333">Path only, hard illuminance floor</text>
+    <rect x="375" y="400" width="250" height="64" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="500" y="422" text-anchor="middle" font-size="12" font-weight="700" fill="#111">MG90S 180 deg blade</text>
+    <text x="500" y="442" text-anchor="middle" font-size="11" fill="#333">Shields bush before extra dim</text>
+    <rect x="640" y="400" width="240" height="64" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="760" y="422" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Underside amber</text>
+    <text x="760" y="442" text-anchor="middle" font-size="11" fill="#333">Maintainer only, not habitat light</text>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="500" width="250" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="235" y="520" text-anchor="middle" font-size="12" font-weight="700" fill="#111">18650 + buck</text>
+    <text x="235" y="538" text-anchor="middle" font-size="11" fill="#333">USB on the bench this semester</text>
+    <rect x="375" y="500" width="250" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="500" y="520" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Solar top-up</text>
+    <text x="500" y="538" text-anchor="middle" font-size="11" fill="#333">Stretch, not required for Week 13</text>
+    <rect x="640" y="500" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="760" y="520" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Playback source</text>
+    <text x="760" y="538" text-anchor="middle" font-size="11" fill="#333">Recorded NSW calls into the FD</text>
+  </g>
+
+  <text x="32" y="590" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#444">Hardware stack: architecture/Hardware_stack.md    Software stack: architecture/Software_stack.md</text>
+  <text x="32" y="608" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#444">False positives only add shielding. Do not use 192 kHz I2S FFT as the demo-critical path.</text>
+  <text x="32" y="626" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#888">COMP4447 / COMP5047  |  University of Sydney  |  S2 2026</text>
+</svg>

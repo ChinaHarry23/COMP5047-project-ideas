@@ -1,0 +1,35 @@
+COMP5047 / COMP4447 — share pack for the group
+Five USYD Master of Computer Science students. Fill TEAM.md (project root) with the three missing names/emails/SIDs. Tick exactly one Project manager.
+
+NEW DIRECTION (12 Sep 2026) — start from live sources, not invented demos
+- ideas-20/from-sources_en.md   English: DCCEEW / KTP / TERN / 2025–26 news → artefacts A–I
+- ideas-20/from-sources_cn.md   中文：同一套「先议题、后装置」
+Earlier idea lists (new-ideas_*.md, ideas-20/00_index_*) mixed cute MCU demos with real crises. Prefer from-sources_*.md.
+Old bollard pack is on hold. Vision Pro remains a second station, not the Pass product.
+
+What to open (previous topic — do not submit unless the group reverts)
+1. 1_Proposal_Wildlife-First_Adaptive_Light.md
+   Paste into Word/Google Docs, 11 pt, 2 cm margins.
+   Check it is actually 1–2 pages. Fill all five team rows. Tick exactly one Project manager.
+   Attach three sketches (bollard+blade, state machine, 2200K vs white).
+
+2. 2_Evidence_pack.md
+   Sydney papers + DCCEEW + how each citation justifies a design choice.
+   Use a few cites on the proposal; keep the rest for the report.
+
+Decisions still needed
+- Who is project manager?
+- Names / unikeys / SIDs for members 3–5
+- OK with Nyctophilus as the primary stakeholder (wattled + free-tailed are acoustic proxies, not the “need darkness” species)?
+- Order parts: ESP32-S3, LD2410, lux sensor, analog bat path, MG90S, 2200 K / amber LED.
+- Vision Pro is optional empathy only — not a replacement for the bollard.
+
+Do not submit the old Word file with empty team rows and 192 kHz FFT as the plan.
+
+3. architecture/ folder
+   Architecture_map.svg  <- paste into Word as a figure
+   Hardware_stack.md     <- parts, buses, pin map
+   Hardware_BOM.md       <- full buy list + Taobao links
+   Hardware_BOM.csv      <- same list for Numbers / Excel
+   Software_stack.md     <- ESP-IDF layers, tasks, six states
+   Open Architecture_map.html in a browser if SVG preview is awkward.
