@@ -15,6 +15,8 @@ Tap a file → GitHub renders the Markdown. Rotate to portrait; tables scroll si
 |---|---|
 | [0_Read_this_first.txt](0_Read_this_first.txt) | What is current vs on hold |
 | [ideas-20/00_index_en.md](ideas-20/00_index_en.md) / [00_index_cn.md](ideas-20/00_index_cn.md) | Older 20-idea index (some were invented — prefer *from-sources*) |
+| [ideas-20/packs_en.md](ideas-20/packs_en.md) / [packs_cn.md](ideas-20/packs_cn.md) | **All 20:** hardware + software architecture, FSM, week plan |
+| [ideas-20/architecture_shared_en.md](ideas-20/architecture_shared_en.md) / [architecture_shared_cn.md](ideas-20/architecture_shared_cn.md) | Shared ESP32-S3 pin/firmware/fail-mode contract |
 | [new-ideas_en.md](new-ideas_en.md) / [new-ideas_cn.md](new-ideas_cn.md) | First shortlist + Vision Pro as second station |
 | [1_Proposal_Wildlife-First_Adaptive_Light.md](1_Proposal_Wildlife-First_Adaptive_Light.md) | Old bollard proposal — **on hold** |
 | [TEAM.md](TEAM.md) | Five MCS students; fill members 3–5 |

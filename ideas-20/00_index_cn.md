@@ -10,7 +10,9 @@ aliases:
 # 20 个构想 — 生态挑战一句 + 交互设计里真正出彩的部分
 
 > **English**：[[00_index_en]]
-> **每个构想的完整 proposal + 架构包**：[[packs_cn]]
+> **每个构想的完整 proposal + 软硬件架构 + 实施计划**：[[packs_cn]]
+> 共用 MCU / 引脚 / 固件分层 / 失效语法：[[architecture_shared_cn]]
+> 1–10 详细包：[[packs_01-10_cn]] · 11–20 详细包：[[packs_11-20_cn]]
 > Brief：*Designing for a More-Than-Human Australia*。Vision Pro = 第二展位，不是 Pass 产品。旧路径灯护柱：搁置。
 
 **组员（拷进最终提交的那一份 proposal）。** 五名悉尼大学计算机硕士。**只勾一名** PM。
@@ -134,3 +136,11 @@ Pass 产品始终是：单片机 + ≥2 类传感器 + 非屏幕驱动 + 自制�
 | 最强「这就是澳大利亚」文献 | **1**，**3**，**6**，**16** |
 
 任选其一的五人分工：硬件 · 固件 · CAD · 文档/视频 · visionOS 放在第 9 周之后。
+
+---
+
+## 软硬件架构与实施（全部 20 条）
+
+共用栈（ESP32-S3、默认引脚、FreeRTOS 分层、失效语法、采购）：[[architecture_shared_cn]]。
+
+每条构想的 **架构图、引脚/BOM 差额、任务表、完整状态机、第 7–13 周验收、第 13 周演示脚本、Vision Pro 边界**：目录 [[packs_cn]] · 1–10 [[packs_01-10_cn]] · 11–20 [[packs_11-20_cn]]。

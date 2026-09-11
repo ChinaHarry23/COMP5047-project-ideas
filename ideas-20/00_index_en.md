@@ -10,7 +10,9 @@ aliases:
 # 20 ideas — one-sentence challenge + what stands out in interaction design
 
 > **中文**：[[00_index_cn]]
-> **Full proposal + architecture pack for each idea**：[[packs_en]]
+> **Full proposal + hardware/software architecture + implementation plan for each idea**：[[packs_en]]
+> Shared MCU / pins / firmware layers / fail-mode grammar：[[architecture_shared_en]]
+> Detailed packs 1–10：[[packs_01-10_en]] · 11–20：[[packs_11-20_en]]
 > Brief: *Designing for a More-Than-Human Australia*. Vision Pro = second station, not the Pass product. Old path-light bollard: on hold.
 
 **Team (copy into whichever proposal you submit).** Five USYD MCS students. Tick **exactly one** PM.
@@ -134,3 +136,11 @@ Pass artefact is always: MCU + ≥2 sensors + non-screen actuation + fabricated 
 | Best “this is Australia” literature | **1**, **3**, **6**, **16** |
 
 Five-person split for any of them: hardware · firmware · CAD · docs/video · visionOS **after** Week 9.
+
+---
+
+## Hardware / software architecture and implementation (all 20)
+
+Shared stack (ESP32-S3, default pins, FreeRTOS layers, fail-mode grammar, cart): [[architecture_shared_en]].
+
+Per-idea **architecture map, pin/BOM delta, tasks, full FSM, W7–W13 acceptance tests, Week 13 demo script, Vision Pro boundary**: index [[packs_en]] · 1–10 [[packs_01-10_en]] · 11–20 [[packs_11-20_en]].

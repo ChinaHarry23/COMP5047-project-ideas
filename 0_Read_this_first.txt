@@ -26,10 +26,18 @@ Decisions still needed
 
 Do not submit the old Word file with empty team rows and 192 kHz FFT as the plan.
 
-3. architecture/ folder
+3. architecture/ folder  (OLD bollard — on hold)
    Architecture_map.svg  <- paste into Word as a figure
    Hardware_stack.md     <- parts, buses, pin map
    Hardware_BOM.md       <- full buy list + Taobao links
    Hardware_BOM.csv      <- same list for Numbers / Excel
    Software_stack.md     <- ESP-IDF layers, tasks, six states
    Open Architecture_map.html in a browser if SVG preview is awkward.
+
+4. ideas-20/ architecture packs (NEW — all 20 ideas)
+   architecture_shared_en.md / _cn.md   shared ESP32-S3 pins, firmware, fail modes
+   packs_en.md / packs_cn.md            index + all-20 glance table
+   packs_01-10_*.md                     ideas 1-10: HW, SW FSM, week-by-week plan
+   packs_11-20_*.md                     ideas 11-20: same depth
+   Each pack: architecture map, pin/BOM delta, FreeRTOS tasks, full FSM,
+   W7-W13 acceptance tests, Week 13 demo script, Vision Pro (inquiry only).
