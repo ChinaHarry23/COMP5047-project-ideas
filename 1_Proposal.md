@@ -48,7 +48,7 @@ When the image API says high-risk debris is exposed **and** mmWave / ToF says a 
 
 ## Hardware / software architecture
 
-World → sense → fuse → actuate. No screen in the Pass loop. Figures: `marine-debris/architecture/Architecture_A.svg`, `Architecture_B.svg`.
+World → sense → fuse → actuate. No screen in the Pass loop. Figures: `architecture/Architecture_A.svg`, `architecture/Architecture_B.svg`.
 
 **Shared stack.** ESP32-S3 (or S3-CAM), ESP-IDF / FreeRTOS, C. BH1750 (I2C), LD2410 (UART), analog turbidity on **ADC1** (WiFi kills ADC2), MG90S lid and/or weir, underside amber. USB bench; 18650 is v2.
 

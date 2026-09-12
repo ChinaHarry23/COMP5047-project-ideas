@@ -1,108 +1,128 @@
-# Software stack — Wildlife-First Adaptive Path Light
+# Software stack — Catchment bin (both approaches)
 
-Firmware is **ESP-IDF**, on-device, no screen. One or two of the five own this path. TinyML / ESP-DSP FFT / BLE are upgrades after the six-state machine works with lux + mmWave + analog bat-band + playback.
+Firmware is **ESP-IDF**, C, on-device, no screen. One or two of the five own this path. visionOS is a **separate repo folder**, started after the W9 physical test.
 
-## Stack
+---
+
+## Shared layers
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  Optional (after demo path works)                           │
-│  TinyML call classifier · ESP-DSP FFT · BLE log dump        │
+│  Optional after demo path works                             │
+│  visionOS overlay · BLE log · TinyML on-device class        │
 ├─────────────────────────────────────────────────────────────┤
-│  App: six-state machine + actuator policy                   │
-│  night_idle · human_path · bat_shield · dawn_inhibit        │
-│  person_leaving · maintainer_fault                          │
+│  App: ONE state machine (A or B) + actuator policy          │
+│  Policy only in task_fsm                                    │
 ├─────────────────────────────────────────────────────────────┤
 │  Context fusion                                             │
-│  1 s presence persist · dual-band energy · pulse-rate gate  │
-│  lux threshold · sunset cache (NVS) · illuminance floor     │
+│  persist · hysteresis · high_risk · bird_class · api_ok     │
+│  NVS: last forecast, last class, sunset                     │
 ├─────────────────────────────────────────────────────────────┤
-│  Drivers (ESP-IDF)                                          │
-│  i2c (BH1750/VEML7700) · uart (LD2410) · adc (bat envelope) │
-│  ledc PWM (path LED, servo, underside amber)                │
+│  Drivers                                                    │
+│  i2c · uart · adc · ledc · gpio · wifi sta                  │
 ├─────────────────────────────────────────────────────────────┤
 │  ESP-IDF · FreeRTOS · ESP32-S3                              │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-Cloud / phone is **not** in this stack. Bureau of Meteorology sunrise/sunset is fetched **once** (or weekly) and cached in NVS. Atlas of Living Australia / iNaturalist are design evidence, not runtime.
+Cloud / phone is **not** in this stack. Roman / ALA / DCCEEW are evidence. ChatGPT is not the Credit API.
 
-## Tasks (FreeRTOS)
+---
 
-| Task | Period | Reads | Writes |
-|---|---|---|---|
-| `task_lux` | 200 ms | I2C lux | `ctx.lux_lux` |
-| `task_mmwave` | 100 ms | UART frames | `ctx.present`, `ctx.range_m` |
-| `task_batband` | 20 ms | ADC envelope | `ctx.band_lo`, `ctx.band_hi`, `ctx.pulse_ok` |
-| `task_clock` | 1 s | NVS sunset + uptime | `ctx.is_night` |
-| `task_fsm` | 50 ms | `ctx` | `cmd.led_duty`, `cmd.servo_deg`, `cmd.amber` |
-| `task_actuate` | 20 ms | `cmd` | LEDC / GPIO |
+## Shared tasks
 
-`task_fsm` is the only place policy lives. Drivers do not fade the LED on their own.
+| Task | Period | Writes |
+|---|---|---|
+| `task_lux` | 200 ms | `ctx.lux` |
+| `task_analog` | 50–200 ms | `ctx.turbidity`, `ctx.rain` |
+| `task_radar` | 100 ms | `ctx.present`, `ctx.range_m` |
+| `task_classify` | 2–5 s | `ctx.class_id`, `ctx.who`, `ctx.api_ok` |
+| `task_api_bom` | 5–10 min | `ctx.forecast_rain` |
+| `task_fsm` | 50 ms | `cmd.lid`, `cmd.weir`, `cmd.flag`, `cmd.piezo`, `cmd.amber` |
+| `task_actuate` | 20 ms | LEDC / GPIO; `ctx.motor_busy` |
 
-## Context struct (fusion inputs)
+`task_fsm` is the only place justice lives.
 
-```
-lux_lux          night if below L_NIGHT; inhibit LED if above L_SPILL
-present          true only after 1 s continuous mmWave inside range gate (~5 m)
-range_m          reject far clutter / vegetation where possible
-band_lo          energy in ~10–15 kHz  (A. australis search)
-band_hi          energy in ~25–35 kHz  (C. gouldii)
-pulse_ok         pulse-rate in a bat-like window (reject wind rumble)
-is_night         BoM cached sunset–sunrise
-fault            lux/mmWave/ADC timeout or battery low
-bat_quiet_too_long   optional maintainer hint, not a wildlife claim
-```
+---
 
-## Six-state machine
+## Shared `ctx`
 
 ```
-                    lux > L_SPILL
-         ┌──────────────────────────────► DAWN_INHIBIT
-         │                                    │
-         │  lux drops                         │ lux stays high
-         ▼                                    ▼
-   NIGHT_IDLE ◄── fade 5 s ── PERSON_LEAVING
-         │ present 1 s              ▲
-         ▼                          │ present clears
-   HUMAN_PATH ── bat pulse_ok ──► BAT_SHIELD
-         ▲                          │
-         └──── 20 s since last pulse ┘
-         
-   any state + fault ──► MAINTAINER_FAULT (underside amber only)
+api_ok            false → approach fail-* row
+high_risk         balloon | soft_plastic
+bird_class        rim present + low ToF  (W8: image who==gull/ibis)
+human_in_gap      !gap_clear || who==person
+forecast_rain     BoM nowcast, cached
+turbidity         ADC1
+fault             timeout, brown-out, stall
+motor_busy        discard ADC
+piezo_left        3 → 0 then mute
 ```
 
-| State | LED | Blade | Rule |
-|---|---|---|---|
-| `NIGHT_IDLE` | off | closed toward bush | Default. Darkness is the product. |
-| `HUMAN_PATH` | fade up 1.5 s to path level ≥ floor | still bush-closed | Walker ~5 m. |
-| `BAT_SHIELD` | may dim, **never below floor** | rotate to occlude bush / tighten on path | Dual-band + pulse-rate. Hold 20 s after last pulse. |
-| `PERSON_LEAVING` | fade down 5 s | return toward bush | Presence cleared. |
-| `DAWN_INHIBIT` | off | park | Do not compete with daylight or street spill. |
-| `MAINTAINER_FAULT` | off (or floor if a person is still there) | park | Underside amber pulse. |
+---
 
-Servo must **not** start a move while `task_batband` is in a detection window (motor artefact).
+## Approach 1 FSM (weir)
 
-## Demo vs upgrade
+See `Approach_A_VR.md`. States: `DRY` `PRE_STORM` `FIRST_FLUSH` `CLEAN` `SETTLE` `FAULT`.  
+Fail: weir to **HOLD**. High-risk keeps HOLD even if water looks clear.
 
-| Must work in Week 13 | Upgrade only |
-|---|---|
-| Lux inhibit, mmWave persist, analog dual-band threshold, six states, PWM fade, servo, playback stimulus | TinyML species classifier, ESP-DSP FFT at 96 kHz, BLE log, solar charge FSM |
+```
+                    forecast or rain
+         DRY ──────────────────────────► PRE_STORM
+          ▲                                 │
+          │                                 │ dirty or high_risk
+          │                                 ▼
+       SETTLE ◄── rain ends ── FIRST_FLUSH ── clear+not high_risk ──► CLEAN
+                                              │
+         any + fault ──► FAULT (HOLD + amber)
+```
 
-False positives are **safe**: extra shielding. False negatives (missed call) are acceptable for the demo if playback still triggers `BAT_SHIELD`.
+---
 
-## Repo layout (suggested)
+## Approach 2 FSM (lid)
+
+See `Approach_B_bin_guard.md`. States: `OPEN_IDLE` `LID_SHUT` `HUMAN_SAFE` `FAIL_SHUT` `FAULT` `SERVICE`.
+
+```
+   OPEN_IDLE ── high_risk AND bird_class AND gap_clear ──► LID_SHUT
+       ▲                                                       │
+       └── bird gone 8 s, or SERVICE ──────────────────────────┘
+
+   !gap_clear or who==person ──► HUMAN_SAFE (open/freeze)
+   api_ok==false ∧ bird_class ──► FAIL_SHUT
+   fault ──► FAULT (shut + amber, no siren)
+```
+
+Piezo: compiled out by default. If on, one-shot in the `LID_SHUT` entry, then mute.
+
+---
+
+## Suggested repo layout
 
 ```
 firmware/
   main/
     app_main.c
     ctx.h
-    fsm.c / fsm.h
-    drivers/lux.c  mmwave.c  batband.c  led.c  servo.c
-    sunset_nvs.c
+    fsm_a.c / fsm_b.c      ← select with Kconfig
+    drivers/lux.c radar.c analog.c cam_http.c servo.c piezo.c
+    nvs_cache.c
   CMakeLists.txt
   sdkconfig.defaults
+cad/
+docs/
+visionos/                  ← after Week 9 only
 ```
 
-Language: C (ESP-IDF). Keep Arduino out of the submitted firmware so the stack matches the proposal.
+Language: C (ESP-IDF). Keep Arduino out of the submitted firmware.
+
+---
+
+## Demo vs upgrade
+
+| Must work Week 13 | Upgrade only |
+|---|---|
+| Turbidity **or** lid threshold, six states, one servo, radio-down fail-*, stuffed/jug stimulus | On-device TinyML, BLE log, piezo, full visionOS |
+| False **hold/shut** is safe | False **creek/open** on a balloon is the residual — say it |
+
+Headset code must not link against `cmd.*`.

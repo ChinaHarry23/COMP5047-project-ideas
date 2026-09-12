@@ -48,7 +48,7 @@ Pass 产品仍是桶。雨 + 浊度 + 图像类别（气球 / 软塑料 / 其他
 
 ## 硬件 / 软件架构
 
-世界 → 感知 → 融合 → 执行。Pass 回路无屏幕。图：`marine-debris/architecture/Architecture_A.svg`、`Architecture_B.svg`。
+世界 → 感知 → 融合 → 执行。Pass 回路无屏幕。图：`architecture/Architecture_A.svg`、`architecture/Architecture_B.svg`。
 
 **共用栈。** ESP32-S3（或 S3-CAM），ESP-IDF / FreeRTOS，C。BH1750（I2C）、LD2410（UART）、模拟浊度走 ADC1（WiFi 会废 ADC2）、MG90S 盖和/或堰、底面琥珀灯。USB 台供；18650 为 v2。
 

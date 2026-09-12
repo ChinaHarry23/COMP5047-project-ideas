@@ -1,59 +1,83 @@
-# Hardware stack — Wildlife-First Adaptive Path Light
+# Hardware stack — Catchment bin (both approaches)
 
-Print or paste **Figure H1** (`Architecture_map.svg`) into the proposal appendix. This file is the parts-and-interfaces design the hardware owners can order against.
+Principle: one MCU family, one print, two firmware personalities. Demo-critical path is **lid / weir + analog turbidity + image class**, not a headset.
 
-Principle: three sensor types, two non-screen actuators, one MCU, no phone in the loop. Demo-critical path is analog frequency-division into ADC — not 192 kHz I2S FFT.
+Pin contract is in the table below. **ADC1 only** if WiFi is on (Tutorial 6: WiFi kills ADC2).
 
-## Stack (outside → silicon)
+---
 
-| Layer | Parts | Interface to ESP32-S3 | Notes |
+## Shared layers (outside → silicon)
+
+| Layer | Parts | Interface | Notes |
 |---|---|---|---|
-| Enclosure | PETG FDM bollard, downward hood, gasket, printed 180° blade | — | Houses electronics. Blade occludes bush azimuth, not the path. Printable MG90S shield: `cad/` in the project root. |
-| Power | USB-C bench supply **or** 18650 + buck (5 V / 3.3 V). Solar top-up = stretch | 5 V in, 3.3 V rail | Semester demo runs on USB. Document IP/solar as v2. |
-| Compute | ESP32-S3 DevKit (or XIAO ESP32-S3) | — | I2C, UART, ADC, LEDC PWM, GPIO. BLE optional, maintainer-only. |
-| Sense — lux | BH1750 **or** VEML7700 | I2C (SDA/SCL) | Night vs dawn/spill. Disables LED above threshold. |
-| Sense — presence | LD2410 mmWave | UART (typically 256000 baud) | Range-gated walker ~5 m. 1 s persistence. Prefer over PIR. |
-| Sense — bat band | MEMS mic (e.g. Knowles SPH0641LU4H-1) **+ off-the-shelf analog frequency-division / envelope module** | ADC (GPIO), 3.3 V analog | Dual gates: **~10–15 kHz** (*A. australis*) and **~25–35 kHz** (*C. gouldii*). Do not design 192 kHz sampling as the demo. |
-| Actuate — path light | 2200 K or PC-amber LED module (~200 lm), N-MOSFET, flyback diode, current-limit | LEDC PWM | Fade 1.5 s up / 5 s down. Hard illuminance floor while a person is present. |
-| Actuate — bush shield | MG90S servo + printed 180° blade | LEDC PWM (50 Hz servo) | Default closed toward bush. Tightens onto path when bat-band fires. Do not move during a detection window. |
-| Actuate — maintainer | Underside amber LED, current-limit resistor | GPIO PWM | Slow pulse. Must not light the habitat. |
-| Demo only | Phone / speaker / bat-detector playback of NSW calls | Into the mic / FD input | Assessor stimulus. Not a claim of a captured animal. |
+| Enclosure | PETG “catchment-mouth” bin, sandstone colour, two trays, lid, optional flag | — | Form is street furniture at a drain, not a gadget |
+| Power | USB-C 5 V 2 A bench; 18650 + buck = v2 | 5 V / 3.3 V | Week 13 on USB |
+| Compute | ESP32-S3 DevKit **or** ESP32-S3-CAM | — | CAM if you want on-board JPEG; else OV2640 on a second board |
+| Sense — lux | BH1750 | I2C 8/9 | Day (gull hours) vs night |
+| Sense — presence | LD2410C | UART 17/18 | Rim gate; 1 s persist |
+| Sense — water | LED + photodiode turbidity | ADC1 GPIO 1 | Approach 1 must; Approach 2 should (same PCB) |
+| Sense — rain proxy | Capacitive soil pad **or** tip-bucket | ADC1 GPIO 2 / GPIO | First-flush start |
+| Actuate — weir / lid | MG90S ×1–2 | LEDC GPIO 7, 11 | 5 V rail, common GND |
+| Actuate — maintainer | Underside amber | GPIO 5 | Must not light habitat |
+| Demo | Stuffed gull, balloon analog, banana, tea+glitter | — | No live animals |
 
-## Suggested ESP32-S3 pin map (DevKit-class)
+---
 
-Exact pins depend on the board. Treat this as the contract; change only if a pin conflicts.
+## Pin map (DevKit-S3 contract)
 
-| Function | Bus | Suggested pins (DevKit-S3) |
-|---|---|---|
-| BH1750 SDA / SCL | I2C0 | GPIO 8 / 9 |
-| LD2410 TX / RX | UART1 | GPIO 17 / 18 |
-| Bat-band envelope | ADC1 | GPIO 1 (ADC1_CH0) |
-| Path LED MOSFET gate | LEDC | GPIO 6 |
-| Servo signal | LEDC | GPIO 7 |
-| Underside amber | LEDC / GPIO | GPIO 5 |
-| Battery sense (optional) | ADC1 | GPIO 2 |
-| Status / spare | GPIO | GPIO 4 |
+| Function | Bus | GPIO | A | B |
+|---|---|---|---|---|
+| BH1750 SDA/SCL | I2C0 | 8 / 9 | ✓ | ✓ |
+| VL53L0X (optional, same I2C) | I2C0 | 8 / 9 | — | ✓ |
+| LD2410 TX/RX | UART1 | 17 / 18 | optional | ✓ |
+| Turbidity | ADC1 | 1 | ✓ | ✓ |
+| Rain proxy | ADC1 | 2 | ✓ | optional |
+| Weir or lid servo | LEDC | 7 | weir | lid |
+| Flag / second servo | LEDC | 11 | flag | unused or weir if both FSMs |
+| Piezo MOSFET | LEDC | 6 | — | optional |
+| Amber | GPIO | 5 | ✓ | ✓ |
+| Gap end-stop | GPIO in | 12 | — | ✓ |
+| DHT / spare | GPIO | 4 | spare | spare |
 
-3.3 V and GND shared. LD2410 is 5 V logic on some modules — **level-shift UART** if required. MOSFET gate: 3.3 V logic-level N-FET (e.g. IRLZ44N is overkill; AO3400 / IRLML2502 class is enough for a 200 lm LED). Add a 100 nF + 10 µF on the 3.3 V rail near the MCU.
+Camera boards steal pins — **write the silk in `fsm.h`**. Keep analog on ADC1. Servo and pump/piezo on 5 V, never the ESP32 3.3 V pin. 100 nF + 10 µF on 3.3 V. Level-shift LD2410 if 5 V logic.
 
-## Power budget (order-of-magnitude, night idle)
+**Do not sample ADC while a servo is moving.** `ctx.motor_busy` discards that window.
 
-| State | Draw (approx.) | Why it matters |
-|---|---|---|
-| Idle sense (lux + mmWave + ADC, LED off, servo holding) | tens of mA | Default is darkness; sensing still runs. |
-| Path LED on | 100–400 mA depending on module | Dominates when a walker is present. |
-| Servo moving | brief 200–500 mA spikes | Do not sample ADC during motion. |
-| USB bench | unlimited | Week 13 demo. |
+---
 
-## What not to buy for Week 13
+## Approach deltas
 
-- Do not depend on a 192 kHz capable I2S pipeline as the only bat detector.
-- Do not add a phone app as the primary interface.
-- SG90 is weaker than MG90S for a blade in wind; buy MG90S.
-- Duplicate “solar PSU” modules: one 18650 + buck is enough on the bench.
+### Approach 1 only
 
-## Order this week (minimum)
+Second tray, weir channel, BoM WiFi, visionOS fiducial stickers on the tray rims. No piezo.
 
-Full cart, SKUs, and Taobao links: [`Hardware_BOM.md`](Hardware_BOM.md) · spreadsheet [`Hardware_BOM.csv`](Hardware_BOM.csv).
+### Approach 2 only
 
-ESP32-S3 board, BH1750 or VEML7700, LD2410C, analog bat path (MAX9814 **plus** 40 kHz receiver + LM358 — there is no cheap ready-made FD module), 2200 K or PC-amber LED + logic-level MOSFET, MG90S, amber LED, USB data cable, jumper wire, breadboard, PETG filament.
+Lid throat CAD (gull cannot extract a 10 cm balloon when shut), end-stop, optional piezo. ToF across the mouth.
+
+### Both on one box (recommended)
+
+Print weir **and** lid. `sdkconfig` `CONFIG_APPROACH_B=y` for Pass. Approach 1 overlay still registers to the trays.
+
+---
+
+## Power (order of magnitude)
+
+| State | Draw |
+|---|---|
+| Idle sense, lid open | tens of mA |
+| Servo moving | 200–500 mA spike |
+| CAM + WiFi TX | 200–400 mA bursts |
+| Piezo click | negligible, 200 ms |
+| USB 2 A | Week 13 |
+
+---
+
+## What not to buy
+
+- Ultrasonic bird-repel modules
+- 192 kHz I2S “for science”
+- Phone as the interface
+- Solar as the only power
+- Real metaldehyde / real harbour salt / live birds
+- A second laptop GPU “VR PC” as the product

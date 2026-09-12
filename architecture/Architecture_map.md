@@ -1,49 +1,33 @@
-# Architecture map — Wildlife-First Adaptive Path Light
+# Architecture maps — Catchment bin for plastic-ingesting seabirds
 
-Attach **`Architecture_map.svg`** as a proposal figure. This page is the caption and reading guide.
+Attach **`Architecture_A.svg`** and **`Architecture_B.svg`** as proposal figures. This page is the caption.
 
-## One-line architecture
+Open [`Architecture_map.html`](Architecture_map.html) in a browser if SVG preview is awkward.
 
-World (bush, path, night) → sensors → ESP32-S3 fusion → LED + 180° blade. On-device only. No screen.
+## One-line (both)
 
-```
- WORLD          bush / bats          path / walker         night lux / clock
-                    │                      │                      │
- SENSE         analog FD mic          LD2410 mmWave          BH1750 / VEML7700
-               10–15 + 25–35 kHz      presence + range       + sunset cache
-                    │                      │                      │
- FUSE               └────────── ESP32-S3 / ESP-IDF ───────────────┘
-                               persist · fuse · six-state machine
-                    │                      │                      │
- ACTUATE       MOSFET + 2200 K         MG90S 180° blade      underside amber
-               path LED                bush shield           maintainer
-                    │                      │                      │
- POWER         18650 + buck            USB on the bench      solar = stretch
- DEMO          recorded NSW playback into the analog front-end
-```
+World (bin, rain, bird-at-rim, high-risk litter) → sensors → ESP32-S3 fusion → lid / weir / flag. On-device care. **No screen as the product.** VR, if used, is a second station.
 
-## Data flow
+## Which map is which
 
-| From | To | Signal | Used for |
+| Figure | Approach | Care in the enclosure | Inquiry on the headset |
 |---|---|---|---|
-| BH1750 / VEML7700 | MCU I2C | lux | night / dawn inhibit |
-| LD2410 | MCU UART | presence, range | walker exception |
-| Analog FD | MCU ADC | envelope in two bands | extra bush shielding |
-| BoM (cached) | NVS | sunset / sunrise | `is_night` without a live radio |
-| FSM | MOSFET | PWM duty | path light + floor |
-| FSM | MG90S | pulse width | blade azimuth |
-| FSM | amber LED | slow PWM | fault / quiet-too-long |
-| Playback (demo) | FD input | recorded calls | Week 13 without a live bat |
+| A | Immersive awareness | Weir + two trays hold first-flush litter | Gut / ocean volume; 20.4% curve; gaze does not move servos |
+| B | Bin guard | Lid closes when high-risk debris + bird-class body | Optional same overlay; still cannot fire the lid |
+
+**Recommended:** print one PETG bin; run B’s FSM as Pass; hang A’s overlay on it after Week 9.
 
 ## Trust boundary
 
-Nothing in the habitat needs a network. Optional BLE is a **maintainer log dump**, not a user interface. If BLE is not up by W12, omit it.
+Nothing in the habitat *needs* a network. Image / BoM APIs are Credit. If they die, Approach A still sorts on turbidity; Approach B fail-closes the lid to a bird-class body. BLE is a maintainer dump, not a UI.
 
 ## Files
 
 | File | What it is |
 |---|---|
-| `Architecture_map.svg` | Figure for Word / PDF appendix |
-| `Hardware_stack.md` | Parts, buses, pin map, order list |
-| `Software_stack.md` | ESP-IDF layers, tasks, six states |
-| `Architecture_map.html` | Browser view |
+| `Architecture_A.svg` / `Architecture_B.svg` | Figures for Word / PDF |
+| `Approach_A_VR.md` | Full Approach 1 design + week plan |
+| `Approach_B_bin_guard.md` | Full Approach 2 design + week plan |
+| `Hardware_stack.md` | Shared pins + two BOM deltas |
+| `Software_stack.md` | Shared layers + both FSMs |
+| `Hardware_BOM.md` | Order list |
