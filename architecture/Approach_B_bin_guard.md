@@ -21,7 +21,7 @@ Shearwaters still do not eat from this bin. Silver gull / ibis are the **vector*
 | Ultrasonic “bird away” | Hits other taxa; not in the TAP; unit already forbade ultrasound on cats/miners |
 | Continuous alarm at the rim | Pest-control aesthetic; habituation; campus noise; not ACI |
 | App notification “bird on bin” | Screen-primary; Pass-illegal as the interface |
-| **Lid + geometry** | Non-screen actuation; same grammar as the honeyeater bath / bait cover; justice is fail-closed |
+| **Lid + geometry** | Non-screen actuation; justice is fail-closed |
 
 If the group insists on an animal-facing sound: **one 200 ms click, maximum three events per approach, then mute for 10 minutes.** Document it as a stretch. The Pass demo must succeed with the **lid only**.
 
