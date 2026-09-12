@@ -20,5 +20,14 @@ Tap a file → GitHub renders the Markdown. Rotate to portrait; tables scroll si
 | [new-ideas_en.md](new-ideas_en.md) / [new-ideas_cn.md](new-ideas_cn.md) | First shortlist + Vision Pro as second station |
 | [1_Proposal_Wildlife-First_Adaptive_Light.md](1_Proposal_Wildlife-First_Adaptive_Light.md) | Old bollard proposal — **on hold** |
 | [TEAM.md](TEAM.md) | Five MCS students; fill members 3–5 |
+| [marine-debris/00_read_this.md](marine-debris/00_read_this.md) | **Current pivot:** proposal + two architectures |
 
 Vision Pro remains an exhibit beside a physical artefact, not the Pass product.
+
+## Current pivot (marine debris / seabirds)
+
+Source-backed topic (EPBC KTP + Roman et al. 2019). Full proposal + two architectures:
+
+1. [marine-debris/00_read_this.md](marine-debris/00_read_this.md) — start here  
+2. [marine-debris/1_Proposal.md](marine-debris/1_Proposal.md) / [1_Proposal_cn.md](marine-debris/1_Proposal_cn.md) — paste into Word  
+3. [marine-debris/architecture/](marine-debris/architecture/Architecture_map.md) — Approach 1 VR inquiry · Approach 2 bin-guard lid

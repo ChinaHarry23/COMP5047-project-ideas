@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 680" width="920" height="680" role="img" aria-label="Approach 1 architecture: ESP32 catchment bin plus VR inquiry">
+  <title>Approach 1  Catchment bin + VR inquiry</title>
+  <desc>Rain and litter to sensors to ESP32-S3 to weir and flag. Vision Pro is read-only overlay.</desc>
+  <rect width="920" height="680" fill="#ffffff"/>
+  <text x="32" y="36" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#111">Approach 1  Catchment bin + immersive inquiry</text>
+  <text x="32" y="56" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#444">Pass = ESP32 weir and trays. VR / Vision Pro = second station. Gaze never fires a motor. COMP4447 / COMP5047.</text>
+
+  <g font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#666">
+    <text x="32" y="100">WORLD</text>
+    <text x="32" y="188">SENSE</text>
+    <text x="32" y="300">FUSE</text>
+    <text x="32" y="430">ACTUATE</text>
+    <text x="32" y="530">INQUIRY</text>
+    <text x="32" y="620">POWER</text>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="78" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="230" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Rain / first flush</text>
+    <text x="230" y="116" text-anchor="middle" font-size="11" fill="#333">Cooks / Harbour analog</text>
+    <rect x="370" y="78" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="490" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Litter on the weir</text>
+    <text x="490" y="116" text-anchor="middle" font-size="11" fill="#333">Balloon = high-risk</text>
+    <rect x="630" y="78" width="250" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="755" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Forecast / clock</text>
+    <text x="755" y="116" text-anchor="middle" font-size="11" fill="#333">BoM nowcast, cached</text>
+  </g>
+
+  <g stroke="#222" stroke-width="1.2" fill="none">
+    <path d="M230 130 v20"/>
+    <path d="M490 130 v20"/>
+    <path d="M755 130 v20"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="158" width="185" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="202" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Turbidity analog</text>
+    <text x="202" y="196" text-anchor="middle" font-size="11" fill="#333">LED + photodiode</text>
+    <text x="202" y="212" text-anchor="middle" font-size="11" fill="#333">ADC1 GPIO 1</text>
+    <rect x="310" y="158" width="175" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="397" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Rain proxy</text>
+    <text x="397" y="196" text-anchor="middle" font-size="11" fill="#333">Soil pad / tip-bucket</text>
+    <text x="397" y="212" text-anchor="middle" font-size="11" fill="#333">ADC1 / GPIO</text>
+    <rect x="500" y="158" width="175" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="587" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Camera</text>
+    <text x="587" y="196" text-anchor="middle" font-size="11" fill="#333">Image API</text>
+    <text x="587" y="212" text-anchor="middle" font-size="11" fill="#333">balloon / soft / other</text>
+    <rect x="690" y="158" width="190" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="785" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">BoM cache</text>
+    <text x="785" y="196" text-anchor="middle" font-size="11" fill="#333">WiFi to NVS</text>
+    <text x="785" y="212" text-anchor="middle" font-size="11" fill="#333">radio-down = hold</text>
+  </g>
+
+  <g stroke="#222" stroke-width="1.2" fill="none">
+    <path d="M202 228 v28"/>
+    <path d="M397 228 v28"/>
+    <path d="M587 228 v28"/>
+    <path d="M785 228 v28"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="264" width="770" height="100" fill="#111" stroke="#111" stroke-width="1.2"/>
+    <text x="495" y="288" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">ESP32-S3  |  ESP-IDF  |  on-device care  |  no screen product</text>
+    <text x="220" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Persist</text>
+    <text x="220" y="336" text-anchor="middle" font-size="11" fill="#ddd">hysteresis, N mm</text>
+    <text x="400" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Fuse</text>
+    <text x="400" y="336" text-anchor="middle" font-size="11" fill="#ddd">turb + rain + class + forecast</text>
+    <text x="590" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Six-state machine</text>
+    <text x="590" y="336" text-anchor="middle" font-size="11" fill="#ddd">fail = HOLD tray</text>
+    <text x="770" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Drive</text>
+    <text x="770" y="336" text-anchor="middle" font-size="11" fill="#ddd">weir, flag, amber</text>
+  </g>
+
+  <g stroke="#222" stroke-width="1.2" fill="none">
+    <path d="M250 364 v28"/>
+    <path d="M495 364 v28"/>
+    <path d="M740 364 v28"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="400" width="240" height="62" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="230" y="424" text-anchor="middle" font-size="12" font-weight="700" fill="#111">MG90S weir</text>
+    <text x="230" y="444" text-anchor="middle" font-size="11" fill="#333">hold vs creek tray</text>
+    <rect x="370" y="400" width="240" height="62" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="490" y="424" text-anchor="middle" font-size="12" font-weight="700" fill="#111">MG90S flag</text>
+    <text x="490" y="444" text-anchor="middle" font-size="11" fill="#333">human: dirty pulse</text>
+    <rect x="630" y="400" width="250" height="62" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="755" y="424" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Amber underside</text>
+    <text x="755" y="444" text-anchor="middle" font-size="11" fill="#333">fault  not habitat light</text>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="500" width="770" height="62" fill="#eef6ff" stroke="#1a4a7a" stroke-width="1.4" stroke-dasharray="6 4"/>
+    <text x="495" y="524" text-anchor="middle" font-size="13" font-weight="700" fill="#1a4a7a">Vision Pro / VR  read-only overlay on the trays</text>
+    <text x="495" y="544" text-anchor="middle" font-size="11" fill="#1a4a7a">Gut volume; 20.4% / 9 / 93 model (labelled); gaze-dwell reveals; pinch scrubs; never writes cmd.*</text>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="590" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="230" y="612" text-anchor="middle" font-size="12" fill="#111">USB 5 V 2 A bench</text>
+    <rect x="370" y="590" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="490" y="612" text-anchor="middle" font-size="12" fill="#111">18650 = v2 only</text>
+    <rect x="630" y="590" width="250" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="755" y="612" text-anchor="middle" font-size="12" fill="#111">Demo: tea+glitter + balloon</text>
+  </g>
+</svg>

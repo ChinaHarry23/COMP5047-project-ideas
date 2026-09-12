@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 640" width="920" height="640" role="img" aria-label="Approach 2 architecture: bin guard lid for high-risk litter">
+  <title>Approach 2  Bin guard</title>
+  <desc>High-risk litter and bird-class body to ESP32-S3 to lid. Optional short piezo. No ultrasound.</desc>
+  <rect width="920" height="640" fill="#ffffff"/>
+  <text x="32" y="36" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#111">Approach 2  Bin guard (keep birds off high-risk litter)</text>
+  <text x="32" y="56" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#444">The warning is the missing aperture. Lid first. Piezo optional, capped, not ultrasonic. COMP4447 / COMP5047.</text>
+
+  <g font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#666">
+    <text x="32" y="100">WORLD</text>
+    <text x="32" y="188">SENSE</text>
+    <text x="32" y="300">FUSE</text>
+    <text x="32" y="430">ACTUATE</text>
+    <text x="32" y="530">POWER</text>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="78" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="230" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#111">High-risk litter</text>
+    <text x="230" y="116" text-anchor="middle" font-size="11" fill="#333">Balloon / soft plastic</text>
+    <rect x="370" y="78" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="490" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Bird-class at rim</text>
+    <text x="490" y="116" text-anchor="middle" font-size="11" fill="#333">Gull / ibis vector</text>
+    <rect x="630" y="78" width="250" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="755" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Human hand</text>
+    <text x="755" y="116" text-anchor="middle" font-size="11" fill="#333">Never pinch</text>
+  </g>
+
+  <g stroke="#222" stroke-width="1.2" fill="none">
+    <path d="M230 130 v20"/>
+    <path d="M490 130 v20"/>
+    <path d="M755 130 v20"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="158" width="185" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="202" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Camera + image API</text>
+    <text x="202" y="196" text-anchor="middle" font-size="11" fill="#333">debris class + who</text>
+    <text x="202" y="212" text-anchor="middle" font-size="11" fill="#333">WiFi Credit</text>
+    <rect x="310" y="158" width="175" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="397" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">LD2410 mmWave</text>
+    <text x="397" y="196" text-anchor="middle" font-size="11" fill="#333">Rim range gate</text>
+    <text x="397" y="212" text-anchor="middle" font-size="11" fill="#333">1 s persist</text>
+    <rect x="500" y="158" width="175" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="587" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">ToF + lux</text>
+    <text x="587" y="196" text-anchor="middle" font-size="11" fill="#333">Low body vs person</text>
+    <text x="587" y="212" text-anchor="middle" font-size="11" fill="#333">I2C</text>
+    <rect x="690" y="158" width="190" height="70" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="785" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#111">End-stop</text>
+    <text x="785" y="196" text-anchor="middle" font-size="11" fill="#333">gap_clear GPIO 12</text>
+    <text x="785" y="212" text-anchor="middle" font-size="11" fill="#333">freeze if false</text>
+  </g>
+
+  <g stroke="#222" stroke-width="1.2" fill="none">
+    <path d="M202 228 v28"/>
+    <path d="M397 228 v28"/>
+    <path d="M587 228 v28"/>
+    <path d="M785 228 v28"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="264" width="770" height="100" fill="#111" stroke="#111" stroke-width="1.2"/>
+    <text x="495" y="288" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">ESP32-S3  |  ESP-IDF  |  justice in task_fsm only</text>
+    <text x="220" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Persist</text>
+    <text x="220" y="336" text-anchor="middle" font-size="11" fill="#ddd">1 s presence</text>
+    <text x="400" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Fuse</text>
+    <text x="400" y="336" text-anchor="middle" font-size="11" fill="#ddd">high_risk x bird x gap</text>
+    <text x="590" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Six-state machine</text>
+    <text x="590" y="336" text-anchor="middle" font-size="11" fill="#ddd">fail-shut to birds</text>
+    <text x="770" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Drive</text>
+    <text x="770" y="336" text-anchor="middle" font-size="11" fill="#ddd">lid, optional click</text>
+  </g>
+
+  <g stroke="#222" stroke-width="1.2" fill="none">
+    <path d="M250 364 v28"/>
+    <path d="M495 364 v28"/>
+    <path d="M740 364 v28"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="400" width="240" height="62" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="230" y="424" text-anchor="middle" font-size="12" font-weight="700" fill="#111">MG90S lid (primary)</text>
+    <text x="230" y="444" text-anchor="middle" font-size="11" fill="#333">aperture disappears</text>
+    <rect x="370" y="400" width="240" height="62" fill="#fff8e8" stroke="#886600" stroke-width="1.2"/>
+    <text x="490" y="424" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Piezo optional</text>
+    <text x="490" y="444" text-anchor="middle" font-size="11" fill="#333">200 ms, max 3, not ultrasound</text>
+    <rect x="630" y="400" width="250" height="62" fill="#fff" stroke="#222" stroke-width="1.2"/>
+    <text x="755" y="424" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Amber underside</text>
+    <text x="755" y="444" text-anchor="middle" font-size="11" fill="#333">fault  no siren</text>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="110" y="500" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="230" y="522" text-anchor="middle" font-size="12" fill="#111">USB 5 V 2 A</text>
+    <rect x="370" y="500" width="240" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="490" y="522" text-anchor="middle" font-size="12" fill="#111">Geometry does most work</text>
+    <rect x="630" y="500" width="250" height="52" fill="#f4f4f4" stroke="#222" stroke-width="1.2"/>
+    <text x="755" y="522" text-anchor="middle" font-size="12" fill="#111">Demo: stuffed gull + balloon</text>
+  </g>
+
+  <text x="32" y="600" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#444">Headset overlay, if used, is the same read-only station as Approach 1. Gaze does not shut the lid. No live birds.</text>
+  <text x="32" y="620" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#444">Named beneficiary stays the shearwater downstream. Gull / ibis are the vector, not a pest product.</text>
+</svg>

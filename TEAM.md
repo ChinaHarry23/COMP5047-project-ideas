@@ -12,4 +12,4 @@ Tick **exactly one** project manager on the proposal.
 | 4 | *TBD* | | | Integration, dusk trials, video, report |
 | 5 | *TBD* | | | Optional: visionOS empathy exhibit **or** PM + evidence pack |
 
-**Do not** replace the physical path light with Apple Vision Pro as the assessed product. With five people, a short RealityKit exhibit beside the bollard is feasible **after** one key hardware feature works.
+**Do not** replace the physical artefact with Apple Vision Pro as the assessed product. Current pivot: catchment bin for plastic-ingesting seabirds (`marine-debris/`). With five people, a short RealityKit exhibit beside the **bin** is feasible **after** one key hardware feature works (Week 9).

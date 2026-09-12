@@ -1,10 +1,14 @@
 COMP5047 / COMP4447 — share pack for the group
 Five USYD Master of Computer Science students. Fill TEAM.md (project root) with the three missing names/emails/SIDs. Tick exactly one Project manager.
 
-NEW DIRECTION (12 Sep 2026) — start from live sources, not invented demos
-- ideas-20/from-sources_en.md   English: DCCEEW / KTP / TERN / 2025–26 news → artefacts A–I
-- ideas-20/from-sources_cn.md   中文：同一套「先议题、后装置」
-Earlier idea lists (new-ideas_*.md, ideas-20/00_index_*) mixed cute MCU demos with real crises. Prefer from-sources_*.md.
+CURRENT PIVOT (12 Sep 2026) — marine debris / plastic-ingesting seabirds
+- marine-debris/00_read_this.md   start here (EN)
+- marine-debris/1_Proposal.md     paste into Word — two architectures
+- Approach 1: ESP32 catchment bin + VR / Vision Pro inquiry (headset is NOT Pass)
+- Approach 2: lid keeps birds off high-risk litter (no ultrasound)
+- Evidence: EPBC KTP + Roman et al. 2019 (CSIRO/UTAS)
+
+Also: ideas-20/from-sources_*.md  DCCEEW / KTP / TERN / 2025–26 news
 Old bollard pack is on hold. Vision Pro remains a second station, not the Pass product.
 
 What to open (previous topic — do not submit unless the group reverts)
@@ -34,7 +38,17 @@ Do not submit the old Word file with empty team rows and 192 kHz FFT as the plan
    Software_stack.md     <- ESP-IDF layers, tasks, six states
    Open Architecture_map.html in a browser if SVG preview is awkward.
 
-4. ideas-20/ architecture packs (NEW — all 20 ideas)
+4. marine-debris/  (CURRENT PIVOT — EPBC marine debris + Roman 2019)
+   00_read_this.md / 00_read_this_cn.md
+   1_Proposal.md / 1_Proposal_cn.md     paste into Word, 11 pt, 2 cm
+   2_Evidence_pack.md
+   architecture/Approach_A_VR.md        ESP32 bin + Vision Pro inquiry
+   architecture/Approach_B_bin_guard.md lid keeps birds off high-risk litter
+   architecture/Architecture_A.svg + Architecture_B.svg
+   Open architecture/Architecture_map.html in a browser.
+   VR is a second station. Approach 2 does NOT use ultrasound.
+
+5. ideas-20/ architecture packs (20 ideas — still useful for comparison)
    architecture_shared_en.md / _cn.md   shared ESP32-S3 pins, firmware, fail modes
    packs_en.md / packs_cn.md            index + all-20 glance table
    packs_01-10_*.md                     ideas 1-10: HW, SW FSM, week-by-week plan
