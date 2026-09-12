@@ -18,7 +18,7 @@ Shearwaters still do not eat from this bin. Silver gull / ibis are the **vector*
 
 | Tempting product | Why it fails this course / the science |
 |---|---|
-| Ultrasonic “bird away” | Hits other taxa; not in the TAP; unit already forbade ultrasound on cats/miners |
+| Ultrasonic “bird away” | Hits other taxa; not in the TAP; fails ACI |
 | Continuous alarm at the rim | Pest-control aesthetic; habituation; campus noise; not ACI |
 | App notification “bird on bin” | Screen-primary; Pass-illegal as the interface |
 | **Lid + geometry** | Non-screen actuation; justice is fail-closed |
